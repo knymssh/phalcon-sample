@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+  web:
+    build:
+      context: web-centos7
+      dockerfile: Dockerfile
+#    args:
+    image: ${DOCKER_MACHINE_NAME}-web
+    container_name: ${DOCKER_MACHINE_NAME}-web
+    environment:
+      DB_HOST: ${DB_HOST}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_NAME: ${DB_NAME}
+    env_file:
+      - env/web.env
+    ports:
+      - "8080:80"
+#      - "8443:443"
+    volumes:
+      - "$PWD/publish:/usr/share/nginx/html"
+#    extra_hosts:
+#    networks: 
+    privileged: true
+    tty: true
+    restart: always
+#    depends_on:
+#    links:
